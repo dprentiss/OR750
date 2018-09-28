@@ -1,0 +1,132 @@
+\documentclass[letterpaper]{article}
+\usepackage{amsmath}
+\begin{document}
+\begin{align}
+\Pr(\mu\mid\tau, y)
+    &\propto
+    \Pr(y\mid\tau, \mu)
+    \Pr(\mu)
+    \\
+    &\propto
+    \prod_{i=1}^n
+    \left[
+    \exp\left(-\frac{\left(y_i-\mu\right)^2}{2\tau^{-1}}\right)
+    \right]
+    \times
+    \exp\left(-\frac{1}{2}\mu^2\right)
+    \\
+    \ln
+    \Pr(\mu\mid\tau, y)
+    &\propto
+    \sum_{i=1}^n
+    \left[
+    -\frac{\left(y_i-\mu\right)^2}{2\tau^{-1}}
+    \right]
+    -\frac{1}{2}\mu^2
+    \\
+    &\propto
+    -\frac{1}{2\tau^{-1}}
+    \sum_{i=1}^n
+    \left(y_i-\mu\right)^2
+    -\frac{1}{2}\mu^2
+    \propto
+    \tau
+    \sum_{i=1}^n
+    \left(y_i-\mu\right)^2
+    +\mu^2
+    \\
+    &\propto
+    \tau
+    \sum_{i=1}^n
+    \left(\mu^2-2\mu y_i + y_i^2\right)
+    +\mu^2
+    \\
+    &\propto
+    \tau \sum_{i=1}^n \mu^2
+    -2\tau\mu\sum_{i=1}^n y_i
+    + \tau \sum_{i=1}^n y_i^2
+    +\mu^2
+    \\
+    &\propto
+    \tau n \mu^2
+    -2\tau n\bar{y}\mu
+    + \tau \sum_{i=1}^n y_i^2
+    +\mu^2
+    \\
+    &\propto
+    \left(1+\tau n\right) \mu^2
+    -2\tau n\bar{y}\mu
+    + \tau \sum_{i=1}^n y_i^2 \label{break1}
+\end{align}
+Now let 
+\begin{align}
+    a &= 
+    1+\tau n
+    \\
+    b &= 
+    -2\tau n\bar{y}
+    \\
+    c &= 
+    \tau \sum_{i=1}^n y_i^2
+\end{align}
+and the right-hand side of equation \ref{break1} is a polynomial of the form
+$a\mu^2 + b\mu + c$.
+After completing the square, we have
+$a\left(\mu - h\right)^2+k$,
+where
+\begin{align}
+    h &= -\frac{b}{2a}
+    = -\frac{-2 n\tau\bar{y}}{2\left(1+\tau n\right)}
+    = \frac{\tau n\bar{y}}{1+\tau n}
+\end{align}
+and
+\begin{align}
+    k &= c-\frac{b^2}{4a}
+    = \tau \sum_{i=1}^n y_i^2
+    -\frac{4\tau^2 n^2\bar{y}^2}{4\left(1+\tau n\right)}
+    = \tau \sum_{i=1}^n y_i^2
+    -\frac{\tau^2 n^2\bar{y}^2}{1+\tau n}.
+\end{align}
+Then, returning to equation \ref{break1} we have
+\begin{align}
+    \ln
+    \Pr(\mu\mid\tau, y)
+    &\propto
+    \left(1+\tau n\right) \mu^2
+    -2\tau\bar{y}\mu
+    + \tau \sum_{i=1}^n y_i^2
+    \\
+    &\propto
+    \left(1+\tau n\right)
+    \left(\mu - \frac{\tau n\bar{y}}{1+\tau n}\right)^2
+    + \tau \sum_{i=1}^n y_i^2
+    -\frac{\tau^2 n^2\bar{y}^2}{1+\tau n}
+    \\
+    \Pr(\mu\mid\tau, y)
+    &\propto
+    \exp\left[
+    \left(1+\tau n\right)
+    \left(\mu - \frac{\tau n\bar{y}}{1+\tau n}\right)^2
+    \right]
+    \times
+    \exp\left[
+    \tau \sum_{i=1}^n y_i^2
+    -\frac{\tau^2 n^2\bar{y}^2}{1+\tau n}
+    \right]
+    \\
+    &\propto
+    \exp\left[
+    \left(1+\tau n\right)
+    \left(\mu - \frac{\tau n\bar{y}}{1+\tau n}\right)^2
+    \right]
+    \\
+    &\propto
+    \exp\left[
+    -\frac{
+    \left(\mu - \frac{\tau n\bar{y}}{1+\tau n}\right)^2
+    }{  
+    2\left(\frac{-1}{2\left(1+\tau n\right)}\right)
+    }
+    \right].
+\end{align}
+\end{document}
