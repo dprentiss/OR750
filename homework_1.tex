@@ -1,6 +1,15 @@
-\documentclass[letterpaper]{article}
+\documentclass[letterpaper]{amsart}
 \usepackage{amsmath}
+
 \begin{document}
+\title[Homework 1]{Homework Assignment 1 \\ OR750: Deep Learning, Fall 2018}
+\author{David Prentiss}
+\email{dprentiss@gmail.com}
+\urladdr{https://github.com/dprentiss/OR750}
+\date{October 15, 2018}
+\maketitle
+
+\section{}
 \begin{align}
 \Pr(\mu\mid\tau, y)
     &\propto
@@ -58,7 +67,7 @@
     -2\tau n\bar{y}\mu
     + \tau \sum_{i=1}^n y_i^2 \label{break1}
 \end{align}
-Now let 
+Now, if we let 
 \begin{align}
     a &= 
     1+\tau n
@@ -69,7 +78,7 @@ Now let
     c &= 
     \tau \sum_{i=1}^n y_i^2
 \end{align}
-and the right-hand side of equation \ref{break1} is a polynomial of the form
+the right-hand side of equation \ref{break1} may be written as a polynomial of the form
 $a\mu^2 + b\mu + c$.
 After completing the square, we have
 $a\left(\mu - h\right)^2+k$,
@@ -87,7 +96,7 @@ and
     = \tau \sum_{i=1}^n y_i^2
     -\frac{\tau^2 n^2\bar{y}^2}{1+\tau n}.
 \end{align}
-Then, returning to equation \ref{break1} we have
+Then, we can rewrite equation \ref{break1} as
 \begin{align}
     \ln
     \Pr(\mu\mid\tau, y)
