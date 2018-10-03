@@ -9,6 +9,61 @@
 \date{October 15, 2018}
 \maketitle
 
+% problem 1
+\section{}
+Let $H$ be the hypothesis that the disease is present and $D$ be the data
+representing a positive test result. The sensitivity and specificity of the test
+are given as
+$\Pr(D\mid H) = 0.99$
+and
+$\Pr(\neg D\mid\neg H) = 0.99$
+respectively.
+The prevelance of the disease is 1 in 10,000 or
+$\Pr(H) = 0.0001$.
+We wish to find
+$\Pr(H\mid D)$.
+
+From Bayes' theorem
+\begin{equation}
+  \Pr(H\mid D) = \frac{\Pr(D\mid H)\Pr(H)}{\Pr(D)}.
+\end{equation}
+From the law of total probability
+\begin{equation}
+  \Pr(D) = \sum_{H_i\in\Omega_H}\Pr(D\mid H_i)\Pr(H_i)
+  = \Pr(D\mid H)\Pr(H) +\Pr(D\mid\neg H)\Pr(\neg H).
+\end{equation}
+Then we need to find
+\begin{equation}
+  \Pr(\neg H) = 1 - \Pr(H) = 0.9999
+\end{equation}
+and
+\begin{equation}
+  \Pr(D\mid\neg H) = 1 - \Pr(D\mid H) = 0.01.
+\end{equation}
+Then
+\begin{align}
+  \Pr(H\mid D)
+  &= \frac{\Pr(D\mid H)\Pr(H)}{\Pr(D)} 
+  \\
+  &= \frac{\Pr(D\mid H)\Pr(H)}{\Pr(D\mid H)\Pr(H) +\Pr(D\mid\neg H)\Pr(\neg H)}
+  \\
+  &= \frac{0.99(0.0001)}{0.99(0.0001) + 0.01(0.9999)} \approx 0.98\%
+\end{align}
+
+% problem 2
+\section{}
+Let
+$\Pr(x = 1)$
+be denoted
+$\Pr(X)$
+for all random variables $x$ in this problem. We need to find
+$\Pr(V\mid H)$,
+$\Pr(V\mid T)$
+and
+$\Pr(V\mid H, T)$.
+
+
+% problem 6
 \section{}
 \begin{align}
 \Pr(\mu\mid\tau, y)
@@ -34,49 +89,52 @@
     -\frac{1}{2}\mu^2
     \\
     &\propto
-    -\frac{1}{2\tau^{-1}}
+    -\frac{\tau}{2}
     \sum_{i=1}^n
     \left(y_i-\mu\right)^2
     -\frac{1}{2}\mu^2
-    \propto
-    \tau
-    \sum_{i=1}^n
-    \left(y_i-\mu\right)^2
-    +\mu^2
     \\
     &\propto
-    \tau
+    -\frac{\tau}{2}
     \sum_{i=1}^n
     \left(\mu^2-2\mu y_i + y_i^2\right)
-    +\mu^2
+    -\frac{1}{2}\mu^2
     \\
     &\propto
-    \tau \sum_{i=1}^n \mu^2
-    -2\tau\mu\sum_{i=1}^n y_i
-    + \tau \sum_{i=1}^n y_i^2
-    +\mu^2
+    -\frac{\tau}{2}
+    \sum_{i=1}^n \mu^2
+    +\tau\mu\sum_{i=1}^n y_i
+    -\frac{\tau}{2}
+    \sum_{i=1}^n y_i^2
+    -\frac{1}{2}\mu^2
     \\
     &\propto
+    -\frac{1}{2}
     \tau n \mu^2
-    -2\tau n\bar{y}\mu
-    + \tau \sum_{i=1}^n y_i^2
-    +\mu^2
+    +\tau n\bar{y}\mu
+    -\frac{\tau}{2}
+    \sum_{i=1}^n y_i^2
+    -\frac{1}{2}\mu^2
     \\
     &\propto
+    -\frac{1}{2}
     \left(1+\tau n\right) \mu^2
-    -2\tau n\bar{y}\mu
-    + \tau \sum_{i=1}^n y_i^2 \label{break1}
+    +\tau n\bar{y}\mu
+    -\frac{\tau}{2}
+    \sum_{i=1}^n y_i^2
 \end{align}
 Now, if we let 
 \begin{align}
     a &= 
-    1+\tau n
+    -\frac{1}{2}
+    \left(1+\tau n\right)
     \\
     b &= 
-    -2\tau n\bar{y}
+    \tau n\bar{y}
     \\
     c &= 
-    \tau \sum_{i=1}^n y_i^2
+    -\frac{\tau}{2}
+    \sum_{i=1}^n y_i^2
 \end{align}
 the right-hand side of equation \ref{break1} may be written as a polynomial of the form
 $a\mu^2 + b\mu + c$.
@@ -85,46 +143,52 @@ $a\left(\mu - h\right)^2+k$,
 where
 \begin{align}
     h &= -\frac{b}{2a}
-    = -\frac{-2 n\tau\bar{y}}{2\left(1+\tau n\right)}
+    = -\frac{-\tau n\bar{y}}{-\left(1+\tau n\right)}
     = \frac{\tau n\bar{y}}{1+\tau n}
 \end{align}
 and
 \begin{align}
     k &= c-\frac{b^2}{4a}
-    = \tau \sum_{i=1}^n y_i^2
-    -\frac{4\tau^2 n^2\bar{y}^2}{4\left(1+\tau n\right)}
-    = \tau \sum_{i=1}^n y_i^2
-    -\frac{\tau^2 n^2\bar{y}^2}{1+\tau n}.
+    = -\frac{\tau}{2}
+    \sum_{i=1}^n y_i^2
+    +\frac{\tau^2 n^2\bar{y}^2}{2\left(1+\tau n\right)}
 \end{align}
 Then, we can rewrite equation \ref{break1} as
 \begin{align}
     \ln
     \Pr(\mu\mid\tau, y)
     &\propto
+    -\frac{1}{2}
     \left(1+\tau n\right) \mu^2
-    -2\tau\bar{y}\mu
-    + \tau \sum_{i=1}^n y_i^2
+    +\tau n\bar{y}\mu
+    -\frac{\tau}{2}
+    \sum_{i=1}^n y_i^2
     \\
     &\propto
+    -\frac{1}{2}
     \left(1+\tau n\right)
     \left(\mu - \frac{\tau n\bar{y}}{1+\tau n}\right)^2
-    + \tau \sum_{i=1}^n y_i^2
-    -\frac{\tau^2 n^2\bar{y}^2}{1+\tau n}
+    +\frac{\tau^2 n^2\bar{y}^2}{2\left(1+\tau n\right)}
+    -\frac{\tau}{2}
+    \sum_{i=1}^n y_i^2
     \\
     \Pr(\mu\mid\tau, y)
     &\propto
     \exp\left[
+    -\frac{1}{2}
     \left(1+\tau n\right)
     \left(\mu - \frac{\tau n\bar{y}}{1+\tau n}\right)^2
     \right]
     \times
     \exp\left[
-    \tau \sum_{i=1}^n y_i^2
-    -\frac{\tau^2 n^2\bar{y}^2}{1+\tau n}
+    \frac{\tau^2 n^2\bar{y}^2}{2\left(1+\tau n\right)}
+    -\frac{\tau}{2}
+    \sum_{i=1}^n y_i^2
     \right]
     \\
     &\propto
     \exp\left[
+    -\frac{1}{2}
     \left(1+\tau n\right)
     \left(\mu - \frac{\tau n\bar{y}}{1+\tau n}\right)^2
     \right]
@@ -134,8 +198,12 @@ Then, we can rewrite equation \ref{break1} as
     -\frac{
     \left(\mu - \frac{\tau n\bar{y}}{1+\tau n}\right)^2
     }{  
-    2\left(\frac{-1}{2\left(1+\tau n\right)}\right)
+    2\left(\frac{1}{1+\tau n}\right)
     }
     \right].
 \end{align}
+So then $\mu\mid\tau,y$ is normally distributed with mean
+$\frac{\tau n\bar{y}}{1+\tau n}$
+and variance
+$\frac{1}{1+\tau n}$.
 \end{document}
