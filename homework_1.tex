@@ -1,122 +1,176 @@
-\documentclass[letterpaper]{amsart}
+\documentclass[letterpaper]{tufte-handout}
 \usepackage{amsmath}
+\usepackage{tikz}
+\usetikzlibrary{graphs}
 
 \begin{document}
 \title[Homework 1]{Homework Assignment 1 \\ OR750: Deep Learning, Fall 2018}
 \author{David Prentiss}
-\email{dprentiss@gmail.com}
-\urladdr{https://github.com/dprentiss/OR750}
+%\email{dprentiss@gmail.com}
+%\urladdr{https://github.com/dprentiss/OR750}
 \date{October 15, 2018}
 \maketitle
 
 % problem 1
-\section{}
+\section*{Exercise 1}
 Let $H$ be the hypothesis that the disease is present and $D$ be the data
 representing a positive test result. The sensitivity and specificity of the test
 are given as
-$\Pr(D\mid H) = 0.99$
+$\Pr(D|H) = 0.99$
 and
-$\Pr(\neg D\mid\neg H) = 0.99$
+$\Pr(\neg D|\neg H) = 0.99$
 respectively.
 The prevelance of the disease is 1 in 10,000 or
 $\Pr(H) = 0.0001$.
 We wish to find
-$\Pr(H\mid D)$.
+$\Pr(H|D)$.
 
 From Bayes' theorem
-\begin{equation}
+\begin{equation*}
   \Pr(H\mid D) = \frac{\Pr(D\mid H)\Pr(H)}{\Pr(D)}.
-\end{equation}
+\end{equation*}
 From the law of total probability
-\begin{equation}
-  \Pr(D) = \sum_{H_i\in\Omega_H}\Pr(D\mid H_i)\Pr(H_i)
+\begin{equation*}
+  \Pr(D) = \sum_{h_i\in\Omega_h}\Pr(D\mid h_i)\Pr(h_i)
   = \Pr(D\mid H)\Pr(H) +\Pr(D\mid\neg H)\Pr(\neg H).
-\end{equation}
+\end{equation*}
 Then we need to find
-\begin{equation}
+\begin{equation*}
   \Pr(\neg H) = 1 - \Pr(H) = 0.9999
-\end{equation}
+\end{equation*}
 and
-\begin{equation}
+\begin{equation*}
   \Pr(D\mid\neg H) = 1 - \Pr(D\mid H) = 0.01.
-\end{equation}
+\end{equation*}
 Then
-\begin{align}
+\begin{align*}
   \Pr(H\mid D)
   &= \frac{\Pr(D\mid H)\Pr(H)}{\Pr(D)} 
   \\
   &= \frac{\Pr(D\mid H)\Pr(H)}{\Pr(D\mid H)\Pr(H) +\Pr(D\mid\neg H)\Pr(\neg H)}
   \\
   &= \frac{0.99(0.0001)}{0.99(0.0001) + 0.01(0.9999)} \approx 0.98\%
-\end{align}
+\end{align*}
 
 % problem 2
-\section{}
+\section*{Exercise 2}
+From the given conditional probability tables we construct the following causal
+relationship graph.
+
+\begin{marginfigure}
+  \tikz \graph [layered layout] {
+    "$v$" -> "$h$";
+    "$d$" -> "$c$" -> "$t$";
+    "$v$" -> "$c$";
+  };
+  \caption{Graph of causal relationships for $\Pr(t|c)$, $\Pr(h|v)$, and $\Pr(c|d,v)$.}
+\end{marginfigure}
+
 Let
 $\Pr(x = 1)$
 be denoted
 $\Pr(X)$
 for all random variables $x$ in this problem. We need to find
-$\Pr(V\mid H)$,
-$\Pr(V\mid T)$
+$\Pr(V| H)$,
+$\Pr(V| T)$
 and
-$\Pr(V\mid H, T)$.
+$\Pr(V| H, T)$.
+From Bayes' theorem we know that
+\begin{align*}
+  \Pr(V\mid H) &= \frac{\Pr(H\mid V)\Pr(V)}{\Pr(H)} \\
+  \Pr(V\mid T) &= \frac{\Pr(T\mid V)\Pr(V)}{\Pr(T)} \\
+  \Pr(V\mid H, T) &= \frac{\Pr(H, T\mid V)\Pr(V)}{\Pr(H,T)}
+\end{align*}
+The probabilities
+$\Pr(V)$,
+$\Pr(D)$,
+$\Pr(T|c)$,
+$\Pr(H|v)$,
+and
+$\Pr(C|d,v)$
+are given. To find total probabilities $\Pr(H)$ and $\Pr(T)$
+we apply the law of total probability as before.
+\begin{align*}
+  \Pr(H) &= \Pr(H\mid V)\Pr(V) +\Pr(H\mid\neg V)\Pr(\neg V)\\
+  &=
+\end{align*}
+and
+\begin{align*}
+  \Pr(T) &= \Pr(T\mid C)\Pr(C) +\Pr(T\mid\neg C)\Pr(\neg C).
+\end{align*}
+So, we must also find the total probability $\Pr(C)$.
+Again, applying the law of total probability we have
 
+\begin{align*}
+  \Pr(C) &= \sum_{d_i\Omega_d}\sum_{v_i\in\Omega_v}\Pr(C\mid d_i, v_i)\Pr(d_i,v_i) \\
+  \begin{split}
+    &= \Pr(C\mid D, V)\Pr(D, V)
+    + \Pr(C\mid D, \neg V)\Pr(D, \neg V)
+    \\
+    &\qquad + \Pr(C\mid \neg D, V)\Pr(\neg D, V)
+    + \Pr(C\mid \neg D, \neg V)\Pr(\neg D, \neg V)
+  \end{split}
+  \\
+         &=
+\end{align*}
 
 % problem 6
 \section{}
+
+\newpage
 \begin{align}
-\Pr(\mu\mid\tau, y)
-    &\propto
+  \Pr(\mu\mid\tau, y)
+  &\propto
     \Pr(y\mid\tau, \mu)
     \Pr(\mu)
-    \\
-    &\propto
+  \\
+  &\propto
     \prod_{i=1}^n
     \left[
     \exp\left(-\frac{\left(y_i-\mu\right)^2}{2\tau^{-1}}\right)
     \right]
     \times
     \exp\left(-\frac{1}{2}\mu^2\right)
-    \\
-    \ln
-    \Pr(\mu\mid\tau, y)
-    &\propto
+  \\
+  \ln
+  \Pr(\mu\mid\tau, y)
+  &\propto
     \sum_{i=1}^n
     \left[
     -\frac{\left(y_i-\mu\right)^2}{2\tau^{-1}}
     \right]
     -\frac{1}{2}\mu^2
-    \\
-    &\propto
+  \\
+  &\propto
     -\frac{\tau}{2}
     \sum_{i=1}^n
     \left(y_i-\mu\right)^2
     -\frac{1}{2}\mu^2
-    \\
-    &\propto
+  \\
+  &\propto
     -\frac{\tau}{2}
     \sum_{i=1}^n
     \left(\mu^2-2\mu y_i + y_i^2\right)
     -\frac{1}{2}\mu^2
-    \\
-    &\propto
+  \\
+  &\propto
     -\frac{\tau}{2}
     \sum_{i=1}^n \mu^2
     +\tau\mu\sum_{i=1}^n y_i
     -\frac{\tau}{2}
     \sum_{i=1}^n y_i^2
     -\frac{1}{2}\mu^2
-    \\
-    &\propto
+  \\
+  &\propto
     -\frac{1}{2}
     \tau n \mu^2
     +\tau n\bar{y}\mu
     -\frac{\tau}{2}
     \sum_{i=1}^n y_i^2
     -\frac{1}{2}\mu^2
-    \\
-    &\propto
+  \\
+  \label{break1}
+  &\propto
     -\frac{1}{2}
     \left(1+\tau n\right) \mu^2
     +\tau n\bar{y}\mu
@@ -125,16 +179,16 @@ $\Pr(V\mid H, T)$.
 \end{align}
 Now, if we let 
 \begin{align}
-    a &= 
-    -\frac{1}{2}
-    \left(1+\tau n\right)
-    \\
-    b &= 
-    \tau n\bar{y}
-    \\
-    c &= 
-    -\frac{\tau}{2}
-    \sum_{i=1}^n y_i^2
+  a &= 
+      -\frac{1}{2}
+      \left(1+\tau n\right)
+  \\
+  b &= 
+      \tau n\bar{y}
+  \\
+  c &= 
+      -\frac{\tau}{2}
+      \sum_{i=1}^n y_i^2
 \end{align}
 the right-hand side of equation \ref{break1} may be written as a polynomial of the form
 $a\mu^2 + b\mu + c$.
@@ -142,58 +196,60 @@ After completing the square, we have
 $a\left(\mu - h\right)^2+k$,
 where
 \begin{align}
-    h &= -\frac{b}{2a}
-    = -\frac{-\tau n\bar{y}}{-\left(1+\tau n\right)}
-    = \frac{\tau n\bar{y}}{1+\tau n}
+  h &= -\frac{b}{2a}
+      = \frac{\tau n\bar{y}}{1+\tau n}
 \end{align}
 and
 \begin{align}
-    k &= c-\frac{b^2}{4a}
-    = -\frac{\tau}{2}
-    \sum_{i=1}^n y_i^2
-    +\frac{\tau^2 n^2\bar{y}^2}{2\left(1+\tau n\right)}
+  k &= c-\frac{b^2}{4a}
+      = -\frac{\tau}{2}
+      \sum_{i=1}^n y_i^2
+      +\frac{\tau^2 n^2\bar{y}^2}{2\left(1+\tau n\right)}
 \end{align}
-Then, we can rewrite equation \ref{break1} as
+Note that $k$, lacking any terms containing $\mu$, is a constant.
+We can then rewrite equation \ref{break1} as
 \begin{align}
-    \ln
-    \Pr(\mu\mid\tau, y)
-    &\propto
-    -\frac{1}{2}
-    \left(1+\tau n\right) \mu^2
-    +\tau n\bar{y}\mu
-    -\frac{\tau}{2}
-    \sum_{i=1}^n y_i^2
-    \\
-    &\propto
+  \ln
+  \Pr(\mu\mid\tau, y)
+  %&\propto
+    %-\frac{1}{2}
+    %\left(1+\tau n\right) \mu^2
+    %+\tau n\bar{y}\mu
+    %-\frac{\tau}{2}
+    %\sum_{i=1}^n y_i^2
+  %\\
+  &\propto
     -\frac{1}{2}
     \left(1+\tau n\right)
     \left(\mu - \frac{\tau n\bar{y}}{1+\tau n}\right)^2
-    +\frac{\tau^2 n^2\bar{y}^2}{2\left(1+\tau n\right)}
-    -\frac{\tau}{2}
-    \sum_{i=1}^n y_i^2
-    \\
-    \Pr(\mu\mid\tau, y)
-    &\propto
+    + k
+    %+\frac{\tau^2 n^2\bar{y}^2}{2\left(1+\tau n\right)}
+    %-\frac{\tau}{2}
+    %\sum_{i=1}^n y_i^2
+  \\
+  \Pr(\mu\mid\tau, y)
+  &\propto
     \exp\left[
     -\frac{1}{2}
     \left(1+\tau n\right)
     \left(\mu - \frac{\tau n\bar{y}}{1+\tau n}\right)^2
     \right]
     \times
-    \exp\left[
-    \frac{\tau^2 n^2\bar{y}^2}{2\left(1+\tau n\right)}
-    -\frac{\tau}{2}
-    \sum_{i=1}^n y_i^2
-    \right]
-    \\
-    &\propto
+    e^k
+    %\exp\left[
+    %\frac{\tau^2 n^2\bar{y}^2}{2\left(1+\tau n\right)}
+    %-\frac{\tau}{2}
+    %\sum_{i=1}^n y_i^2
+    %\right]
+  \\
+  &\propto
     \exp\left[
     -\frac{1}{2}
     \left(1+\tau n\right)
     \left(\mu - \frac{\tau n\bar{y}}{1+\tau n}\right)^2
     \right]
-    \\
-    &\propto
+  \\
+  &\propto
     \exp\left[
     -\frac{
     \left(\mu - \frac{\tau n\bar{y}}{1+\tau n}\right)^2
@@ -202,8 +258,10 @@ Then, we can rewrite equation \ref{break1} as
     }
     \right].
 \end{align}
-So then $\mu\mid\tau,y$ is normally distributed with mean
-$\frac{\tau n\bar{y}}{1+\tau n}$
-and variance
-$\frac{1}{1+\tau n}$.
+So then
+\begin{equation}
+  \mu\mid\tau,y
+  \sim \mathcal{N}\left(\frac{\tau n\bar{y}}{1+\tau n},
+\frac{1}{1+\tau n}\right)
+\end{equation}
 \end{document}
