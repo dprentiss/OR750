@@ -1,4 +1,4 @@
-\documentclass[letterpaper]{tufte-handout}
+\documentclass[letterpaper]{amsart}
 \usepackage{amsmath}
 \usepackage{tikz}
 \usetikzlibrary{graphs}
@@ -57,14 +57,14 @@ Then
 From the given conditional probability tables we construct the following causal
 relationship graph.
 
-\begin{marginfigure}
+\begin{figure}
   \tikz \graph [layered layout] {
     "$v$" -> "$h$";
     "$d$" -> "$c$" -> "$t$";
     "$v$" -> "$c$";
   };
   \caption{Graph of causal relationships for $\Pr(t|c)$, $\Pr(h|v)$, and $\Pr(c|d,v)$.}
-\end{marginfigure}
+\end{figure}
 
 Let
 $\Pr(x = 1)$
@@ -76,11 +76,15 @@ $\Pr(V| T)$
 and
 $\Pr(V| H, T)$.
 From Bayes' theorem we know that
-\begin{align*}
+\begin{align}
   \Pr(V\mid H) &= \frac{\Pr(H\mid V)\Pr(V)}{\Pr(H)} \\
   \Pr(V\mid T) &= \frac{\Pr(T\mid V)\Pr(V)}{\Pr(T)} \\
-  \Pr(V\mid H, T) &= \frac{\Pr(H, T\mid V)\Pr(V)}{\Pr(H,T)}
-\end{align*}
+  \Pr(V\mid H, T) &= \frac{\Pr(H, T\mid V)\Pr(V)}{\Pr(H,T)} \label{eq:vht}
+\end{align}
+Also, noting that $h$ and $t$ are conditionally independent, equation \ref{eq:vht} becomes
+\begin{equation}
+  \Pr(V\mid H, T) = \frac{\Pr(H\mid V)\Pr(V)\Pr(T\mid V)\Pr(V)}{\Pr(H)\Pr(T)}.
+\end{equation}
 The probabilities
 $\Pr(V)$,
 $\Pr(D)$,
@@ -113,7 +117,23 @@ Again, applying the law of total probability we have
   \\
          &=
 \end{align*}
+Finally, we must find $\Pr(T|V)$. Consider the joint probability $\Pr(C,D,T,V)$.
+We choose this probability because it contains all conditional variables up our givens.
+From the chain rule of probabilities we know that 
+\begin{equation*}
+  \Pr(C,D,T,V) &= \Pr(T\mid C,D,V)\Pr(C\mid D,V)\Pr(D\mid V)\Pr(V). \\
+\end{equation*}
+And since $d$ and $v$ are conditionally independent, we have
+\begin{equation*}
+  \Pr(C,D,T,V) &= \Pr(T\mid C,D,V)\Pr(C\mid D,V)\Pr(D)\Pr(V). \\
+\end{equation*}
 
+\begin{equation*}
+  \Pr(C,D,T,V) &= \Pr(C\mid D,T,V)\Pr(D\mid T,V)\Pr(T\mid V)\Pr(V). \\
+\end{equation*}
+\begin{equation*}
+  \Pr(C,D,T,V) &= \Pr(C\mid D,V)\Pr(D)\Pr(T\mid V)\Pr(V). \\
+\end{equation*}
 % problem 6
 \section{}
 
