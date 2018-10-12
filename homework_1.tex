@@ -122,23 +122,37 @@ Finally, we must find $\Pr(T|V)$. Consider the joint probability $\Pr(C,D,T,V)$.
 We choose this probability because it contains all conditional variables up our givens.
 From the chain rule of probabilities we know that
 \begin{equation*}
-  \Pr(C,D,T,V) &= \Pr(T\mid C,D,V)\Pr(C\mid D,V)\Pr(D\mid V)\Pr(V). \\
+  \Pr(C,D,T,V) = \Pr(T\mid C,D,V)\Pr(C\mid D,V)\Pr(D\mid V)\Pr(V). \\
 \end{equation*}
 And since $d$ and $v$ are conditionally independent, we have
 \begin{equation*}
-  \Pr(C,D,T,V) &= \Pr(T\mid C,D,V)\Pr(C\mid D,V)\Pr(D)\Pr(V). \\
+  \Pr(C,D,T,V) = \Pr(T\mid C,D,V)\Pr(C\mid D,V)\Pr(D)\Pr(V). \\
 \end{equation*}
 
 \begin{equation*}
-  \Pr(C,D,T,V) &= \Pr(C\mid D,T,V)\Pr(D\mid T,V)\Pr(T\mid V)\Pr(V). \\
+  \Pr(C,D,T,V) = \Pr(C\mid D,T,V)\Pr(D\mid T,V)\Pr(T\mid V)\Pr(V). \\
 \end{equation*}
 \begin{equation*}
-  \Pr(C,D,T,V) &= \Pr(C\mid D,V)\Pr(D)\Pr(T\mid V)\Pr(V). \\
+  \Pr(C,D,T,V) = \Pr(C\mid D,V)\Pr(D)\Pr(T\mid V)\Pr(V). \\
 \end{equation*}
+
+\section*{Exercise 3}
+\begin{align*}
+  l(\lambda)
+  &= \sum_{i=1}^N\ln f(x_i \mid \lambda)
+    \\
+  &= \sum_{i=1}^N\ln \frac{\lambda^x e^{-\lambda}}{x_i!}
+    \\
+  &= \sum_{i=1}^N \left[x_i\ln\lambda-\lambda-\ln(x_i!) \right]
+    \\
+  &= \ln\lambda\sum_{i=1}^N x_i -n\lambda-\sum_{i=1}^N\ln(x_i!)
+    \\
+  &=
+    l^\prime(\lambda)
+  \end{align*}
+
 % problem 6
-\section{}
-
-\newpage
+\section*{Exercise 6}
 \begin{align}
   \Pr(\mu\mid\tau, y)
   &\propto
