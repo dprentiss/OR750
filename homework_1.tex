@@ -53,12 +53,12 @@ Then
   &= \frac{0.99(0.0001)}{0.99(0.0001) + 0.01(0.9999)} \approx 0.98\%
 \end{align*}
 
+
 % problem 2
 \section*{Exercise 2}
-From the given conditional probability tables we construct the following causal
+From the given conditional probability tables we can construct the following causal
 relationship graph.
-
-\begin{figure}
+\begin{figure}[h]
   \tikz \graph [layered layout] {
     "$v$" -> "$h$";
     "$d$" -> "$c$" -> "$t$";
@@ -140,17 +140,178 @@ And since $d$ and $v$ are conditionally independent, we have
 \begin{align*}
   l(\lambda)
   &= \sum_{i=1}^N\ln f(x_i \mid \lambda)
+  = \sum_{i=1}^N\ln \frac{\lambda^x e^{-\lambda}}{x_i!}
+  = \sum_{i=1}^N \left[x_i\ln\lambda-\lambda-\ln(x_i!) \right]
     \\
-  &= \sum_{i=1}^N\ln \frac{\lambda^x e^{-\lambda}}{x_i!}
+  &= \ln\lambda\sum_{i=1}^N x_i -N\lambda-\sum_{i=1}^N\ln(x_i!)
+\end{align*}
+Since
+$l(\lambda)$
+is convex upward, it is maximized where
+$l^\prime(\lambda) = 0$.
+So,  the MLE estimate,
+\(\lambda_{\text{ML}}\),
+is
+\begin{align*}
+    l^\prime(\lambda_{\text{ML}})
+  =
+  \frac{1}
+  {\lambda_{\text{ML}}}
+    \sum_{i=1}^N x_i
+    -N
+  &= 0
+  \\
+  \lambda_{\text{ML}}
+  &=
+    \frac{1}{N}
+    \sum_{i=1}^N x_i
+    = \bar{x}
+\end{align*}
+\section*{Exercise 4}
+\begin{align*}
+  \Pr(\lambda\mid x_1,\dots, x_N)
+  &\propto
+    \Pr(x_1,\dots, x_N\mid\lambda)\Pr(\lambda)
     \\
-  &= \sum_{i=1}^N \left[x_i\ln\lambda-\lambda-\ln(x_i!) \right]
+  &\propto
+    \prod_{i=1}^Nf(x_i\mid\lambda)f(\lambda\mid\alpha,\beta)
     \\
-  &= \ln\lambda\sum_{i=1}^N x_i -n\lambda-\sum_{i=1}^N\ln(x_i!)
+  \ln\Pr(\lambda\mid x_1,\dots, x_N)
+  &\propto
+   \sum_{i=1}^N\ln \frac{\lambda^x e^{-\lambda}}{x_i!}
+    + (\alpha - 1)\ln\lambda-\beta\lambda
+    \\
+  &\propto
+    \ln\lambda\sum_{i=1}^N x_i -N\lambda
+    -\sum_{i=1}^N\ln(x_i!)
+    + (\alpha - 1)\ln\lambda-\beta\lambda
+    \\
+  &\propto
+    \left(
+    \sum_{i=1}^N x_i+\alpha-1
+    \right)
+    \ln\lambda
+    -(N + \beta)\lambda
+    -\sum_{i=1}^N\ln(x_i!)
+    \\
+  \Pr(\lambda\mid x_1,\dots, x_N)
+  &\propto
+    \lambda^{
+    \left(
+    N\bar{x}+\alpha-1
+    \right)
+    }
+    e^{
+    -(N + \beta)\lambda
+    }
+    e^{
+    \left(
+    -\sum_{i=1}^N\ln(x_i!)
+      \right)
+    }
+    \\
+  &\propto
+    \lambda^{
+    \left(
+    N\bar{x}+\alpha-1
+    \right)
+    }
+    e^{
+    -(N + \beta)\lambda
+    }
+  \\
+  &=
+    \frac{
+    (N+\beta)^{(N\bar{x}+\alpha)}
+    \lambda^{(N\bar{x}+\alpha-1)}
+    e^{-(N + \beta)\lambda}
+    }
+    {
+    \Gamma\left(
+    N\bar{x}+\alpha
+    \right)
+    }
+\end{align*}
+
+\section*{Exercise 5}
+\begin{align*}
+  l(\lambda)
+  &= \sum_{i=1}^N\ln f(x_i \mid \lambda)
+    = \sum_{i=1}^N\ln\lambda e^{-\lambda x_i}
+    = N\ln\lambda - \lambda N\bar{x}
+\end{align*}
+Since
+$l(\lambda)$
+is convex upward, it is maximized where
+$l^\prime(\lambda) = 0$.
+So the MLE estimate,
+\(\lambda_{\text{ML}}\),
+is
+\begin{align*}
+  l^\prime
+  (\lambda_{\text{ML}})
+  = \frac{N}{\lambda_{\text{ML}}} - N\bar{x}
+  &=0
+    \\
+  \lambda_{\text{ML}}
+  &= \frac
+  {N}
+  {N\bar{x}}
+  = \frac
+  {1}
+  {\bar{x}}
+\end{align*}
+\begin{align*}
+  \Pr(\lambda\mid x_1,\dots, x_N)
+  &\propto
+    \Pr(x_1,\dots, x_N\mid\lambda)\Pr(\lambda)
+    \\
+  &\propto
+    \prod_{i=1}^Nf(x_i\mid\lambda)f(\lambda\mid\alpha,\beta)
+    \\
+  &\propto
+    \prod_{i=1}^N\left(\lambda e^{-\lambda x_i}\right)
+    \left( \lambda^{\alpha-1} e^{-\beta\lambda} \right)
+    \\
+  \ln\Pr(\lambda\mid x_1,\dots, x_N)
+  &\propto
+   \sum_{i=1}^N \left( \ln \lambda e^{-\lambda x_i} \right)
+    + (\alpha - 1)\ln\lambda-\beta\lambda
+    \\
+  &\propto
+    N\ln\lambda - \lambda \sum_{i=1}^N x_i
+    + (\alpha - 1)\ln\lambda-\beta\lambda
+    \\
+  &\propto
+    \left(
+    N+\alpha-1
+    \right)
+    \ln\lambda
+    -(N\bar{x} + \beta)\lambda
+    \\
+  \Pr(\lambda\mid x_1,\dots, x_N)
+  &\propto
+    \lambda^{
+    \left(
+    N+\alpha-1
+    \right)
+    }
+    e^{
+    -(N\bar{x}+ \beta)\lambda
+    }
     \\
   &=
-    l^\prime(\lambda)
-  \end{align*}
-
+    \frac{
+    (N\bar{x}+\beta)^{(N+\alpha)}
+    \lambda^{(N+\alpha-1)}
+    e^{-(N\bar{x} + \beta)\lambda}
+    }
+    {
+    \Gamma\left(
+    N\bar{x}+\beta
+    \right)
+    }
+\end{align*}
 % problem 6
 \section*{Exercise 6}
 \begin{align}
@@ -299,6 +460,7 @@ So then
   \sim \mathcal{N}\left(\frac{\tau n\bar{y}}{1+\tau n},
 \frac{1}{1+\tau n}\right)
 \end{equation}
+\section*{Exercise 7}
 \section*{Exercise 8}
 \begin{equation*}
   f(\theta)
@@ -312,44 +474,42 @@ So then
     \ln\left(1-h_\theta(x^{(i)})\right)
   \right]
   + \frac{\lambda}{2m}
-  \|\theta}\|_2^2
+  \|\theta\|_2^2
 \end{equation*}
 \begin{align*}
   \frac{\partial}{\partial\theta_k}
   f(\theta)
   &=
-  \frac{-y^{(i)}}{m}
+  \frac{1}{m}
   \sum_{i=1}^m
-  \left[
+    \left[
+    -y^{(i)}
   \frac{\partial}{\partial\theta_k}
     \ln\left(h_\theta(x^{(i)})\right)
-  \right]
-  +
-  \frac{y^{(i)}-1}{m}
-  \sum_{i=1}^m
-  \left[
+  -
+    (1 - y^{(i)})
   \frac{\partial}{\partial\theta_k}
     \ln\left(1 - h_\theta(x^{(i)})\right)
   \right]
-  + \frac{\lambda\theta_i}{m}
+  + \frac{\lambda\theta_k}{m}
   \\
   &=
-  \frac{-y^{(i)}}{m}
+  \frac{1}{m}
   \sum_{i=1}^m
-  \left[
-    \frac{1}{h_\theta(x^{(i)})}
+    \left[
+    \frac
+    {-y^{(i)}}
+    {h_\theta(x^{(i)})}
   \frac{\partial}{\partial\theta_k}
     h_\theta(x^{(i)})
-  \right]
   +
-  \frac{y^{(i)}-1}{m}
-  \sum_{i=1}^m
-  \left[
-    \frac{-1}{1 - h_\theta\left(x^{(i)}\right)}
+    \frac
+    {1 - y^{(i)}}
+    {1 - h_\theta\left(x^{(i)}\right)}
   \frac{\partial}{\partial\theta_k}
     h_\theta(x^{(i)})
   \right]
-  + \frac{\lambda\theta_i}{m}
+  + \frac{\lambda\theta_k}{m}
 \end{align*}
 Consider the product
 \begin{equation*}
@@ -360,18 +520,22 @@ Consider the product
 \end{equation*}
 and let
 \begin{equation*}
-\sum_{j\neq k}\theta_jx_j^{(i)} = C.
+C:=\sum_{j\neq k}\theta_jx_j^{(i)}
 \end{equation*}
 Then,
 \begin{align*}
   h_\theta(x^{(i)})
-  &=g(\theta\tran x^{(i)})
-  = \frac{1}{1 + \exp\left(-\theta_kx_k^{(i)}\right)
+  =g(\theta\tran x^{(i)})
+  &= \frac{1}{1 + \exp\left(-\theta \tran x^{(i)}\right)}
+    \\
+  &= \frac{1}
+    {1 + \exp\left(-\theta_kx_k^{(i)}\right)
     \exp\left(-C\right)}
     \\
   \frac{\partial}{\partial\theta_k}
   h_\theta(x^{(i)})
-  &= \frac{\partial}{\partial\theta_k}
+  &=
+  \frac{\partial}{\partial\theta_k}
   \left[
     1 + \exp\left(-\theta_kx_k^{(i)}\right)
     \exp\left(-C\right)
