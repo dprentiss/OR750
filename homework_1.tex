@@ -53,7 +53,6 @@ Then
   &= \frac{0.99(0.0001)}{0.99(0.0001) + 0.01(0.9999)} \approx 0.98\%
 \end{align*}
 
-
 % problem 2
 \section*{Exercise 2}
 From the given conditional probability tables we can construct the following causal
@@ -137,6 +136,9 @@ And since $d$ and $v$ are conditionally independent, we have
 \end{equation*}
 
 \section*{Exercise 3}
+Let
+\(x_i\sim \text{Pois}(\lambda)}, i = 1,\dots,N\).
+Estimate \(\lambda\) using maximum likelihood estimation.
 \begin{align*}
   l(\lambda)
   &= \sum_{i=1}^N\ln f(x_i \mid \lambda)
@@ -168,6 +170,13 @@ is
     = \bar{x}
 \end{align*}
 \section*{Exercise 4}
+Let
+\(x_i\sim \text{Pois}(\lambda)}, i = 1,\dots,N\),
+as before.
+Find
+\(\Pr(\lambda|1,\dots,N)\),
+assuming a prior distribution
+\(\lambda\sim\Gamma(\lambda|a,b)\).
 \begin{align*}
   \Pr(\lambda\mid x_1,\dots, x_N)
   &\propto
@@ -234,10 +243,17 @@ is
 \end{align*}
 
 \section*{Exercise 5}
+Let
+\(x_1,x_2,\dots,x_N\)
+be an independent sample from the exponential distribution with density
+\(
+Pr(x|\lambda) = \lambda e^{-\lambda x}
+\).
+Find the maximum likelihood estimate,
+\(\lambda_\text{ML}\).
 \begin{align*}
   l(\lambda)
   &= \sum_{i=1}^N\ln f(x_i \mid \lambda)
-    = \sum_{i=1}^N\ln\lambda e^{-\lambda x_i}
     = N\ln\lambda - \lambda N\bar{x}
 \end{align*}
 Since
@@ -261,6 +277,7 @@ is
   {1}
   {\bar{x}}
 \end{align*}
+Choosing a gamma distribution for our conjugate prior we have
 \begin{align*}
   \Pr(\lambda\mid x_1,\dots, x_N)
   &\propto
@@ -312,6 +329,25 @@ is
     \right)
     }
 \end{align*}
+So the posterior distribution of \(\lambda\) is a gamma distribution with
+\(\lambda\sim\Gamma(N\bar{x}+\beta, N+\alpha)\).
+since the expected value, \(\text{E}\left[X\right]\),
+of a gamma-distributed variable \(X\sim\Gamma(\alpha,\beta)\) is
+\begin{equation*}
+  \text{E}\left[X\right]
+  =
+  \frac{\alpha}{\beta}
+\end{equation*}
+then the expected value of \(\lambda\) is
+\begin{equation*}
+  \text{E}\left[\lambda\right]
+  =
+  \frac
+  {N\bar{x}+\beta}
+  {N+\alpha}
+\end{equation*}
+
+
 % problem 6
 \section*{Exercise 6}
 \begin{align}
