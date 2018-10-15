@@ -332,19 +332,19 @@ From Bayes' theorem we know that
 \begin{align}
   \Pr(V\mid H) &= \frac{\Pr(H\mid V)\Pr(V)}{\Pr(H)} \\
   \Pr(V\mid T) &= \frac{\Pr(T\mid V)\Pr(V)}{\Pr(T)} \\
-  \Pr(V\mid H, T) &= \frac{\Pr(H, T\mid V)\Pr(V)}{\Pr(H,T)} \label{eq:vht}
+  \Pr(V\mid H, T) &= \frac{\Pr(H, T\mid V)\Pr(V)}{\Pr(H,T)} \label{eq:vht}.
 \end{align}
 Also, noting from the causal relationship graph that $h$ and $t$ are conditionally independent when \(V\) is given, equation (\ref{eq:vht}) becomes
 \begin{align}
-  \Pr(V\mid H, T) &= \frac{\Pr(H\mid V)\Pr(V)\Pr(T\mid V)\Pr(V)}{\Pr(H\mid T)\Pr(T)}
+  \Pr(V\mid H, T) &= \frac{\Pr(H\mid V)\Pr(T\mid V)\Pr(V)}{\Pr(H\mid T)\Pr(T)}
   \\
   &=
-    \frac{\Pr(H\mid V)\Pr(V)\Pr(T\mid V)\Pr(V)}
-    {\Pr(H\mid V)\Pr(V \mid T)\Pr(T)}.
+    \frac{\Pr(H\mid V)\Pr(T\mid V)\Pr(V)}
+    {\Pr(H\mid V)\Pr(V \mid T)\Pr(T)}
   \\
   &=
-    \frac{\Pr(V)\Pr(T\mid V)\Pr(V)}
-    {\Pr(V \mid T)\Pr(T)}.
+    \frac{\Pr(T\mid V)\Pr(V)}
+    {\Pr(V \mid T)\Pr(T)} = 1???
 \end{align}
 The probabilities
 $\Pr(V)$,
@@ -417,10 +417,10 @@ With these values we can now calculate
   \\
   \Pr(V\mid H, T)
   &=
-    \frac{\Pr(V)\Pr(T\mid V)\Pr(V)}
+    \frac{\Pr(T\mid V)\Pr(V)}
     {\Pr(V \mid T)\Pr(T)}
-               = \frac{(0.2)(0.89262)(0.2)}{(0.36988447067)(0.482648)}
-    = 0.2
+               = \frac{(0.89262)(0.2)}{(0.36988447067)(0.482648)}
+    = 1???
 \end{align*}
 \section*{Exercise 3}
 Let
