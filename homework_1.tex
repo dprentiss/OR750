@@ -303,7 +303,7 @@ Then
   \\
   &= \frac{\Pr(D\mid H)\Pr(H)}{\Pr(D\mid H)\Pr(H) +\Pr(D\mid\neg H)\Pr(\neg H)}
   \\
-  &= \frac{0.99(0.0001)}{0.99(0.0001) + 0.01(0.9999)} \approx 0.98\%
+  &= \frac{0.99(0.0001)}{0.99(0.0001) + 0.01(0.9999)} \approx 0.98\%.
 \end{align*}
 
 % problem 2
@@ -334,10 +334,18 @@ From Bayes' theorem we know that
   \Pr(V\mid T) &= \frac{\Pr(T\mid V)\Pr(V)}{\Pr(T)} \\
   \Pr(V\mid H, T) &= \frac{\Pr(H, T\mid V)\Pr(V)}{\Pr(H,T)} \label{eq:vht}
 \end{align}
-Also, noting that $h$ and $t$ are conditionally independent, equation \ref{eq:vht} becomes
-\begin{equation}
-  \Pr(V\mid H, T) = \frac{\Pr(H\mid V)\Pr(V)\Pr(T\mid V)\Pr(V)}{\Pr(H)\Pr(T)}.
-\end{equation}
+Also, noting from the causal relationship graph that $h$ and $t$ are conditionally independent when \(V\) is given, equation (\ref{eq:vht}) becomes
+\begin{align}
+  \Pr(V\mid H, T) &= \frac{\Pr(H\mid V)\Pr(V)\Pr(T\mid V)\Pr(V)}{\Pr(H\mid T)\Pr(T)}
+  \\
+  &=
+    \frac{\Pr(H\mid V)\Pr(V)\Pr(T\mid V)\Pr(V)}
+    {\Pr(H\mid V)\Pr(V \mid T)\Pr(T)}.
+  \\
+  &=
+    \frac{\Pr(V)\Pr(T\mid V)\Pr(V)}
+    {\Pr(V \mid T)\Pr(T)}.
+\end{align}
 The probabilities
 $\Pr(V)$,
 $\Pr(D)$,
@@ -349,7 +357,8 @@ are given. To find total probabilities $\Pr(H)$ and $\Pr(T)$
 we apply the law of total probability as before.
 \begin{align*}
   \Pr(H) &= \Pr(H\mid V)\Pr(V) +\Pr(H\mid\neg V)\Pr(\neg V)\\
-  &=
+  &= (0.9)(0.2)+(0.1)(1 - 0.2)\\
+  &= 0.26
 \end{align*}
 and
 \begin{align*}
@@ -368,26 +377,51 @@ Again, applying the law of total probability we have
     + \Pr(C\mid \neg D, \neg V)\Pr(\neg D, \neg V)
   \end{split}
   \\
-         &=
+         &= (0.999)(0.2)(0.4) + (0.9)(0.4)(1-0.2)
+  \\
+         &\qquad + (0.9)(1-0.4)(0.2) +(0.01)(1-0.4)(1-0.2)
+  \\
+         &= 0.48072
 \end{align*}
-Finally, we must find $\Pr(T|V)$. Consider the joint probability $\Pr(C,D,T,V)$.
-We choose this probability because it contains all conditional variables up our givens.
-From the chain rule of probabilities we know that
-\begin{equation*}
-  \Pr(C,D,T,V) = \Pr(T\mid C,D,V)\Pr(C\mid D,V)\Pr(D\mid V)\Pr(V). \\
-\end{equation*}
-And since $d$ and $v$ are conditionally independent, we have
-\begin{equation*}
-  \Pr(C,D,T,V) = \Pr(T\mid C,D,V)\Pr(C\mid D,V)\Pr(D)\Pr(V). \\
-\end{equation*}
-
-\begin{equation*}
-  \Pr(C,D,T,V) = \Pr(C\mid D,T,V)\Pr(D\mid T,V)\Pr(T\mid V)\Pr(V). \\
-\end{equation*}
-\begin{equation*}
-  \Pr(C,D,T,V) = \Pr(C\mid D,V)\Pr(D)\Pr(T\mid V)\Pr(V). \\
-\end{equation*}
-
+With the total probability,
+\(\Pr(C)\),
+we can calculate
+\begin{align*}
+  \Pr(T) &= \Pr(T\mid C)\Pr(C) +\Pr(T\mid\neg C)\Pr(\neg C) \\
+         &= (0.95)(0.48072)+(0.05)(1-0.48072) \\
+         &=0.482648
+\end{align*}
+Finally, we must find $\Pr(T|V)$.
+Since \(T\) is conditioned on \(C\) and \(C\) on \((D,V)\),
+\begin{align*}
+  \Pr(T\mid V) &= \Pr(T\mid C)\Pr(C\mid V)
+  \\
+  \Pr(T\mid V) &= \Pr(T\mid C)
+                \left[\Pr(C\mid D)\Pr(D)
+                 + \Pr(C\mid \neg D)\Pr(\neg D)
+                 \right]
+  \\
+  &= (0.95)\left[ (0.999)(0.4)+(0.9)(1-0.4) \right]
+  \\
+  &= 0.89262
+\end{align*}
+With these values we can now calculate
+\begin{align*}
+  \Pr(V\mid H) &= \frac{\Pr(H\mid V)\Pr(V)}{\Pr(H)}
+                 = \frac{(0.9)(0.2)}{(0.26)}
+                 = 0.692307692308
+  \\
+  \Pr(V\mid T) &= \frac{\Pr(T\mid V)\Pr(V)}{\Pr(T)}
+                 = \frac{(0.89262)(0.2)}{(0.482648)}
+                 = 0.36988447067
+  \\
+  \Pr(V\mid H, T)
+  &=
+    \frac{\Pr(V)\Pr(T\mid V)\Pr(V)}
+    {\Pr(V \mid T)\Pr(T)}
+               = \frac{(0.2)(0.89262)(0.2)}{(0.36988447067)(0.482648)}
+    = 0.2
+\end{align*}
 \section*{Exercise 3}
 Let
 \(x_i\sim \text{Pois}(\lambda)}, i = 1,\dots,N\).
@@ -604,6 +638,37 @@ then the expected value of \(\lambda\) is
 % problem 6
 \section*{Exercise 6}
 For the model
+\begin{align*}
+  y_i&\sim\mathcal{N}(\mu,\tau^{-1})
+       \\
+  \mu&\sim\mathcas{N}(0,1)
+       \\
+  \tau&\sim\mathcas{N}(2,1)
+\end{align*}
+show that
+\begin{align*}
+  \mu\mid\tau,y
+  &\sim \mathcal{N}\left(\frac{\tau n\bar{y}}{1+\tau n},
+\frac{1}{1+\tau n}\right)
+    \\
+  \tau\mid\mu,y
+  &\sim \Gamma
+  \left(
+    \alpha
+    +\frac{n}{2}
+    ,
+    \beta
+    +\frac{1}{2}
+    \sum_{i=1}^n
+    \left(y_i-\mu\right)^2
+  \right)
+\end{align*}
+First, to find the conditional distribution \(\mu\mid\tau,y\), with known variance, \(\tau^{-1}\),
+we assume a Gaussian prior
+\(
+  \mu&\sim\mathcas{N}(0,1)
+  \).
+  Then, applying Bayes' theorem, the posterior becomes
 \begin{align}
   \Pr(\mu\mid\tau, y)
   &\propto
@@ -664,7 +729,7 @@ For the model
     \sum_{i=1}^n y_i^2
 \end{align}
 Now, if we let
-\begin{align}
+\begin{align*}
   a &=
       -\frac{1}{2}
       \left(1+\tau n\right)
@@ -675,18 +740,18 @@ Now, if we let
   c &=
       -\frac{\tau}{2}
       \sum_{i=1}^n y_i^2
-\end{align}
+\end{align*}
 the right-hand side of equation (\ref{break1}) may be written as a polynomial of the form
 $a\mu^2 + b\mu + c$.
 After completing the square, we have
 $a\left(\mu - h\right)^2+k$,
 where
-\begin{align}
+\begin{align*}
   h &= -\frac{b}{2a}
       = \frac{\tau n\bar{y}}{1+\tau n}
 \end{align}
 and
-\begin{align}
+\begin{align*}
   k &= c-\frac{b^2}{4a}
       = -\frac{\tau}{2}
       \sum_{i=1}^n y_i^2
@@ -745,12 +810,17 @@ We can then rewrite equation (\ref{break1}) as
     \right].
 \end{align}
 So then
-\begin{equation}
+\begin{equation*}
   \mu\mid\tau,y
   \sim \mathcal{N}\left(\frac{\tau n\bar{y}}{1+\tau n},
 \frac{1}{1+\tau n}\right)
-\end{equation}
-Gamma
+\end{equation*}
+Second, to find the conditional distribution,
+\(\tau\mid\mu,y\),
+with known mean,
+\(\mu\),
+We assume a gamma-distributed prior,
+\tau\sim\(\Gamma(\alpha,\beta)\).
 \begin{align}
   \Pr(\mu\mid\tau, y)
   &\propto
@@ -819,7 +889,7 @@ Gamma
  \right]
 \end{align}
 So then
-\begin{equation}
+\begin{equation*}
   \tau\mid\mu,y
   \sim \Gamma
   \left(
@@ -831,7 +901,7 @@ So then
     \sum_{i=1}^n
     \left(y_i-\mu\right)^2
   \right)
-\end{equation}
+\end{equation*}
 Since the modeled distribution of \(\tau\) is given as
 \(\tau\sim\mathcal{N}(2,1)\),
 we choose hyperparameters
@@ -1163,112 +1233,43 @@ The given values are used for the remainder of the exercise.
     \end{center}
     { \hspace*{\fill} \\}
 \section*{Exercise 8}
-\begin{equation*}
+\begin{align*}
   f(\theta)
-  =
+  &=
   \frac{1}{m}
-  \sum_{i=1}^m
   \left[
-    -y^{(i)}
-    \ln\left(h_\theta(x^{(i)})\right)
-    -(1 - y^{(i)})
-    \ln\left(1-h_\theta(x^{(i)})\right)
+    -y\tran
+    \ln\left(h_\theta(X)\right)
+    -(1 - y)\tran
+    \ln\left(1-h_\theta(X)\right)
   \right]
   + \frac{\lambda}{2m}
   \|\theta\|_2^2
-\end{equation*}
-\begin{align*}
-  \frac{\partial}{\partial\theta_k}
-  f(\theta)
+    \\
   &=
   \frac{1}{m}
-  \sum_{i=1}^m
-    \left[
-    -y^{(i)}
-  \frac{\partial}{\partial\theta_k}
-    \ln\left(h_\theta(x^{(i)})\right)
-  -
-    (1 - y^{(i)})
-  \frac{\partial}{\partial\theta_k}
-    \ln\left(1 - h_\theta(x^{(i)})\right)
+  \left[
+    -y\tran
+    \ln\left(
+    g(X\theta)
+    \right)
+    -(1 - y)\tran
+    \ln\left(1-g\left(X\theta\right) \right)
   \right]
-  + \frac{\lambda\theta_k}{m}
-  \\
-  &=
+  + \frac{\lambda}{2m}
+  \|\theta\|_2^2
+    \\
+  \nabla f(\theta)
+    &=
   \frac{1}{m}
-  \sum_{i=1}^m
-    \left[
-    \frac
-    {-y^{(i)}}
-    {h_\theta(x^{(i)})}
-  \frac{\partial}{\partial\theta_k}
-    h_\theta(x^{(i)})
-  +
-    \frac
-    {1 - y^{(i)}}
-    {1 - h_\theta\left(x^{(i)}\right)}
-  \frac{\partial}{\partial\theta_k}
-    h_\theta(x^{(i)})
-  \right]
-  + \frac{\lambda\theta_k}{m}
-\end{align*}
-Consider the product
-\begin{equation*}
-\theta\tran x^{(i)}
-= \sum_{j=1}^3\theta_jx_j^{(i)}
-= \theta_kx_k^{(i)}
-+ \sum_{j\neq k}\theta_jx_j^{(i)}
-\end{equation*}
-and let
-\begin{equation*}
-C:=\sum_{j\neq k}\theta_jx_j^{(i)}
-\end{equation*}
-Then,
-\begin{align*}
-  h_\theta(x^{(i)})
-  =g(\theta\tran x^{(i)})
-  &= \frac{1}{1 + \exp\left(-\theta \tran x^{(i)}\right)}
-    \\
-  &= \frac{1}
-    {1 + \exp\left(-\theta_kx_k^{(i)}\right)
-    \exp\left(-C\right)}
-    \\
-  \frac{\partial}{\partial\theta_k}
-  h_\theta(x^{(i)})
-  &=
-  \frac{\partial}{\partial\theta_k}
-  \left[
-    1 + \exp\left(-\theta_kx_k^{(i)}\right)
-    \exp\left(-C\right)
-  \right]^{-1}
-  \\
-  &=
-  -\left[
-    1 + \exp\left(-\theta_kx_k^{(i)}\right)
-    \exp \left(-C\right)
-  \right]^{-2}
-  \left[
-    -x_k^{(i)}
-    \exp\left(-\theta_kx_k^{(i)}\right)
-    \exp\left(-C\right)
-  \right]
-    \\
-  &=
-  -\left[
-    1 + \exp\left(-\theta\tran x^{(i)}\right)
-  \right]^{-2}
-  \left[
-    -x_k^{(i)}
-    \exp\left(-\theta\tran x^{(i)}\right)
-  \right]
-    \\
-  &=
-    x_k^{(i)}
-    \exp\left(-\theta\tran x^{(i)}\right)
-  \left[
-    1 + \exp\left(-\theta\tran x^{(i)}\right)
-  \right]^{-2}
-
+      \left[
+      X\tran
+      \left(
+      g\left(X\theta \right)
+      -y
+      \right)
+      +\lambda\theta
+      \right]
 \end{align*}
 
     \begin{Verbatim}[commandchars=\\\{\}]
