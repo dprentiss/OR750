@@ -16,7 +16,7 @@
   \begin{itemize}
  \item The Pennsylvania--New Jersey--Maryland Interconnection (PTO) is a regional transmission organization (RTO).
     \item It implements a wholesale electricity market for a network of producers and consumers in the Mid-Atlantic.
-      \item It's primary purpose is to prevent outages or otherwise un-met demand.
+      \item Its primary purpose is to prevent outages or otherwise unmet demand.
         \item Obligations are exchanged in bilateral contracts, the day-ahead market,
           and the real-time market.
   \end{itemize}
@@ -140,7 +140,7 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Parameters}
+  \frametitle{Parameters and loss}
     \begin{equation*}
       h(y\mid\sigma,\xi)
       =
@@ -151,6 +151,14 @@
   \item Scale, \(\sigma\), is our learned parameter
   \item Shape, \(\xi = f(u, \sigma)\)?
     \(\text{EX}\left[y\right] = \sigma+u \implies \xi = 0\)?
+\item Log-likelihood
+  \begin{equation*}
+    \log\sigma(t)-(1/\xi+1)\log(1+\sigma(t)\xi(y-u))
+    \end{equation*}
+    \item Loss function for SGD
+      \begin{equation*}
+        L(W) = -\frac{1}{n}\sum_{i=1}^n l(y_i\mid x_i, \xi, u, W, b)
+      \end{equation*}
   \end{itemize}
 \end{frame}
 
