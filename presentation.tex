@@ -44,11 +44,7 @@
 \end{frame}
 
 \begin{frame}
-  \frametitle{Recurrent neural network}
-\end{frame}
-
-\begin{frame}
-  \frametitle{Long short-term memory}
+  \frametitle{RNN vs. long short-term memory}
   Vanilla RNN
   \begin{equation*}
     h_t=\tanh\left( W
@@ -79,6 +75,23 @@
 
 \begin{frame}
   \frametitle{LTSM model}
+  \begin{align*}
+    \begin{pmatrix}
+      i \\ f \\ o \\ k
+    \end{pmatrix}
+    &=
+    \begin{pmatrix}
+      \sigma \\ \sigma \\ \sigma \\ \tanh
+    \end{pmatrix}
+    \circ
+    W
+    \begin{pmatrix}
+      h_{t-1} \\ x_t
+    \end{pmatrix}
+    \\
+    c_t &= f \odot c_{t-1} + i \odot k \\
+    h_t &= o \odot \tanh\left(c_t\right)
+  \end{align*}
   \includegraphics[width=\textwidth]{model.png}
 \end{frame}
 
