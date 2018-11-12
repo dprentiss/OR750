@@ -1,0 +1,101 @@
+\documentclass{beamer}
+\usepackage[utf8]{inputenc}
+
+\begin{document}
+
+\title{Summary of Polson and Sokolov 2018}
+\subtitle{Deep Learning for Energy Markets}
+\author{David Prentiss}
+\institute{OR750-004}
+\date{\today}
+
+\frame{\titlepage}
+
+\begin{frame}
+  \frametitle{Recurrent neural network}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Recurrent neural network}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Long short-term memory}
+  Vanilla RNN
+  \begin{equation*}
+    h_t=\tanh\left( W
+      \begin{pmatrix}
+        h_{t-1} \\ x_t
+      \end{pmatrix}
+    \right)
+  \end{equation*}
+  LSTM
+  \begin{align*}
+    \begin{pmatrix}
+      i \\ f \\ o \\ k
+    \end{pmatrix}
+    &=
+    \begin{pmatrix}
+      \sigma \\ \sigma \\ \sigma \\ \tanh
+    \end{pmatrix}
+    \circ
+    W
+    \begin{pmatrix}
+      h_{t-1} \\ x_t
+    \end{pmatrix}
+    \\
+    c_t &= f \odot c_{t-1} + i \odot k \\
+    h_t &= o \odot \tanh\left(c_t\right)
+  \end{align*}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Extreme value theory}
+  \begin{itemize}
+  \item Extreme value analysis begins by filtering the data to select
+    ``extreme'' values.
+    \item Extreme values are selected by one of two methods.
+  \begin{itemize}
+  \item Block maxima: Select the peak values after dividing the series into periods.
+  \item Peak over threshold: Select values larger than some threshold.
+  \end{itemize}
+    \item Peak over threshold used in this paper.
+  \end{itemize}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Peak over threshold}
+\end{frame}
+
+\begin{frame}
+  \frametitle{Generalized Pareto distribution}
+  \begin{itemize}
+  \item CDF
+    \begin{equation*}
+      H(y\mid\sigma,\xi)
+      =
+      1-\left(1+\xi\frac{y-u}{\sigma}\right)_+^{\frac{-1}{\xi}}
+    \end{equation*}
+  \item PDF
+    \begin{equation*}
+      h(y\mid\sigma,\xi)
+      =
+      1-\frac{1}{\sigma}\left(1+\xi\frac{y-u}{\sigma}\right)^{\frac{-1}{\xi}-1}
+    \end{equation*}
+  \end{itemize}
+
+\end{frame}
+
+\begin{frame}
+  \frametitle{Parameters}
+  \begin{itemize}
+  \item Location, \(u\), is the threshold
+  \item Scale, \(\sigma\), is our learned parameter
+  \item Shape, \(\xi = f(u, \sigma)\)?
+    \(\text{EX}\left[y\right] = \sigma+u \implies \xi = 0\)?
+
+  \end{itemize}
+
+\end{frame}
+
+\end{document}
