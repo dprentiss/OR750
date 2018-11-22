@@ -1,0 +1,20 @@
+* The PJM Interconnection
+** The PJM Interconnection is a regional transmission organization (RTO)
+- PJM is broken into 20 transmission zones
+- Each zone is owned and operated by separate transmission owners who are responsible for designing and maintaining their portion of the system.
+- Individual utilities within PJM plan their use of resources around peak loads.
+- PJM acts as a guarantor of system reliability and is responsible for preventing outages within the system.
+- Within the PJM Interconnection nearly all wholesale electricity is bought or sold through bilateral contracts.
+- The remainder is bought or sold on the two bid-based electricity markets PJM operates: the day-ahead (DA) and real-time (RT) markets.
+* Extreme Value Theory
+** Focus on error in the tail
+** Block maxima vs peaks over threshold (POTS)
+*** Block maxima
+**** Generalized extreme value (GEVD) distribution
+*** Peaks over threshold
+**** Generalized Pareto distribution (GPD)
+**** low threshold causes bias
+**** high threshold shrinks input data and increases variance
+
+* Recurrent Neural Network
+** Long short-term memory
